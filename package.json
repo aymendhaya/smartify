@@ -6,7 +6,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
-  "proxy": "https://api.spotify.com",
+  "proxy": "http://daiquiri.fluidware.it:18175",
   "devDependencies": {
     "react-scripts": "1.0.10"
   },
