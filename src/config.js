@@ -1,5 +1,10 @@
 const Config = {
+<<<<<<< HEAD
   spotifyAccessToken: 'BQAxBEJUw-gjTRFVpE1UtHqHC0kN5P0XH9QWhWECJ78jjvzbhoqY37seAYF5dYQiBtQcdF2FTvKzl9WYiTtToS1v9oi3OY4ip9X30fQZJX9TH7M5TBQ_9XEDukRSrPW_Z_P0UfidlxlY8T_zcnn6NaIQ'
+=======
+  spotifyAccessToken: 
+  'BQB3TpxyBJA1TZjFUV_9L9bCyt8cF_okjSn80hzjz0hBuMw5zfetZQyz2diu1aoi8ZccshTNoutz96W76c5aIfoXf4-8Swg8Lu3ExHF8cgEGNnW_qE1KYfGdGFknFsBTXib9UgTcGUP_TE6BBqzGhRbMTYXp59Eyem806m4_2qL5ZnTm7BMIDe3__v1B_KwsPSPd-DNvM1g-1KrrsaT6aq5U264pGqN3yGh_6C0iujCauzFV3QweyWweEhufXnr1ki3SGzh-PxzMKwo4vuYERh0OdI6nNTyBTKfs54asVgdP0g9ypDtbQv76zlk'
+>>>>>>> firstSubBranch
 }
 
 export default Config
