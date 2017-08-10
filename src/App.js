@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import SearchForm from './SearchFormComponent';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import {search} from './lib/SpotifyUtil'
+
+// import logo from './logo.svg';
+// import './App.css';
+// import {search} from './lib/SpotifyUtil'
+
+injectTapEventPlugin();
+
+
+    const SearchFormTag = () => (<MuiThemeProvider><SearchForm /></MuiThemeProvider>);
+
 
 class App extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -15,22 +26,22 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <input type='text' onChange={ e => this.setState({search_text: e.target.value})} value={this.state.search_text} /><br/>
 
-        <input type='radio' checked={this.state.search_type === 'artist'} onChange={e => this.setState({search_type: 'artist'})} /> Artist
-        <input type='radio' checked={this.state.search_type === 'album'} onChange={e => this.setState({search_type: 'album'})} /> Album
-        <input type='radio' checked={this.state.search_type === 'track'} onChange={e => this.setState({search_type: 'track'})} /> Track
-        <br/>
-        <button onClick={ e => this.doSearch()}>Search</button>
+    // var auxData = ['Radiohead', 'Queen', 'Archenemy'];
+    // var dataList = auxData.map(function(data, index){ return <li key={ index }>{data}</li>; })
+
+    return (
+      
+      <div className="App">
+
+         <p className="App-intro">
+          To get started, type a <code>keyword</code> and select a <code>category</code> then click search button.
+        </p> 
+      
+<SearchFormTag />
+
+{/* <ul>{ dataList }</ul> */}
+ 
         {
           (
             this.state.search_result ?
@@ -42,14 +53,6 @@ class App extends Component {
     );
   }
 
-  // Private methods
-
-  doSearch() {
-    search(this.state.search_text, this.state.search_type).then(
-      json => {
-        this.setState({search_result: json})
-    })
-  }
 }
 
 export default App;
