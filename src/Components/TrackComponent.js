@@ -7,60 +7,65 @@ import Snackbar from 'material-ui/Snackbar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import {blue500} from 'material-ui/styles/colors';
-// import { createStore }          from 'redux'
+
+import { connect } from 'react-redux';
+import { addFav, cancelFav } from '../redux';
+
+
 
 const style = {
-    margin: 0,
-    top: 'auto',
-    right: 20,
-    bottom: 20,
-    left: 'auto',
-    position: 'fixed',
+  margin: 0,
+  top: 'auto',
+  right: '2%',
+  bottom: '2%',
+  left: 'auto',
+  position: 'fixed',
 };
 
 class Track extends Component {
 
-  constructor(props) {
+  constructor(props, dispatch) {
     super(props);
 
     this.state = {
-     
-     
+
+
       autoHideDuration: 2500,
       message: 'LIKED',
       open: false,
       likedSong: '',
-      likedSongs: [],
       openFavlist: false,
 
     };
 
   }
-  handleToggle = () => this.setState({openFavlist: !this.state.openFavlist});
+  handleToggle = () => this.setState({ openFavlist: !this.state.openFavlist });
 
   handleTouchTap = (obj) => {
 
-    let likedSongs = (this.state.likedSongs.slice())
+    let localStore = {
+      trackID: obj.id,
+      trackName: obj.name + ' - ' + obj.artists[0].name
+    }
 
-    this.setState({ message: likedSongs.indexOf(obj) < 0 ? 'LIKED' : 'DISLIKED', })
+    let isLiked = (this.props.manageFav).find(obj => JSON.stringify(obj) === JSON.stringify(localStore))
 
-    likedSongs.indexOf(obj) < 0 ? likedSongs.push(obj) : likedSongs.splice(likedSongs.indexOf(obj), 1);
+    this.setState({ message: !isLiked ? 'LIKED' : 'DISLIKED', });
+
+    isLiked ? this.props.cancelFav(localStore) : this.props.addFav(localStore);
 
     this.setState({ likedSong: obj.name + ' - ' + obj.artists[0].name, });
-    this.setState({ likedSongs: likedSongs, });
     this.setState({ open: true, });
-    // console.log(this.state.likedSongs);
 
   };
 
   handleActionTouchTap = () => {
-       this.handleToggle()  
+    this.handleToggle()
     this.setState({
       open: false,
     });
-    
-  
+
+
     console.log(this.state.likedSongs);
   };
 
@@ -69,14 +74,13 @@ class Track extends Component {
     this.setState({
       open: false,
     });
- 
+
   };
 
   render() {
 
     return (
       <div>
-
 
         <Table onRowSelection={this.handleRowSelection} >
 
@@ -86,8 +90,8 @@ class Track extends Component {
               return (
                 <TableRow key={key}>
                   <TableRowColumn>
-                    <Checkbox onCheck={() => this.handleTouchTap(data)} label={data.artists[0].name+' - '+ data.name} checkedIcon={<ActionFavorite />} uncheckedIcon={<ActionFavoriteBorder />} />
-                  {/* this.handleTouchTap(data.name, data.id, data.artists[0].name) */}
+                    <Checkbox onCheck={() => this.handleTouchTap(data)} label={data.artists[0].name + ' - ' + data.name} checkedIcon={<ActionFavorite />} uncheckedIcon={<ActionFavoriteBorder />} />
+                    {/* this.handleTouchTap(data.name, data.id, data.artists[0].name) */}
                   </TableRowColumn>
                 </TableRow>)
             }) : null}
@@ -97,7 +101,7 @@ class Track extends Component {
         </Table>
 
         <Snackbar
-          style={{width: 700}}
+          // style={{width: 700}}
           open={this.state.open}
           message={this.state.likedSong}
           action={this.state.message}
@@ -106,15 +110,15 @@ class Track extends Component {
           onRequestClose={this.handleRequestClose}
         />
 
-        <Drawer open={this.state.openFavlist} width="30%">
+        <Drawer open={this.state.openFavlist} width="50%">
 
-        {(this.state.likedSongs).map((data, key) =>  
-        
-        {return <MenuItem key={key} leftIcon={<ActionFavorite />}>{data.name+ ' - ' + data.artists[0].name}</MenuItem>})}
+          {(this.props.manageFav).map((data, key) =>
+
+          { return <MenuItem key={key} leftIcon={<ActionFavorite />}>{data.trackName}</MenuItem> })}
 
         </Drawer>
 
-       <FloatingActionButton style={style} onTouchTap={this.handleToggle.bind(this)}><ActionFavorite color={blue500} /></FloatingActionButton>
+        <FloatingActionButton style={style} onTouchTap={this.handleToggle.bind(this)}><ActionFavorite /></FloatingActionButton>
 
 
       </div>
@@ -123,4 +127,14 @@ class Track extends Component {
   }
 }
 
-export default Track;
+const mapStateToProps = (state, ownProps) => ({
+  manageFav: state.manageFav,
+});
+
+const mapDispatchToProps = { addFav, cancelFav, };
+
+const TrackContainer = connect(mapStateToProps, mapDispatchToProps)(Track);
+
+
+export default TrackContainer;
+

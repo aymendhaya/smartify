@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+// import {bindActionCreators} from 'redux';
+// import {connect} from 'react-redux';
+// import * as CartActions from '../actions/cart';
+
 import { getSongsByAlbum } from '../lib/SpotifyUtil';
 import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Track from './TrackComponent';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import { createStore }          from 'redux'
 
 class Album extends Component {
 
@@ -53,4 +56,17 @@ class Album extends Component {
   }
 }
 
-export default Album;
+// function mapStateToProps(state, prop){
+  
+//   return { cart: state.cart }
+// }
+
+// function mapDispatchToProps(dispatch) {
+
+//   return { action: bindActionCreators(CartActions, dispatch)}
+
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Track);
+
+export default Album

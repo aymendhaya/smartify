@@ -1,7 +1,3 @@
-# BEFORE TESTING THE APPLICATION
-
-Please update the token in config.js with a new non-expired token (Error 401)
-
 # Home page
 
 Must include a form for searching through Artists, Albums and tracks
