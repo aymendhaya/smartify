@@ -11,8 +11,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { connect } from 'react-redux';
 import { addFav, cancelFav } from '../redux';
 
-
-
 const style = {
   margin: 0,
   top: 'auto',
@@ -28,7 +26,6 @@ class Track extends Component {
     super(props);
 
     this.state = {
-
 
       autoHideDuration: 2500,
       message: 'LIKED',
@@ -65,10 +62,7 @@ class Track extends Component {
       open: false,
     });
 
-
-    console.log(this.state.likedSongs);
   };
-
 
   handleRequestClose = () => {
     this.setState({
@@ -120,7 +114,6 @@ class Track extends Component {
 
         <FloatingActionButton style={style} onTouchTap={this.handleToggle.bind(this)}><ActionFavorite /></FloatingActionButton>
 
-
       </div>
 
     );
@@ -135,6 +128,4 @@ const mapDispatchToProps = { addFav, cancelFav, };
 
 const TrackContainer = connect(mapStateToProps, mapDispatchToProps)(Track);
 
-
 export default TrackContainer;
-
