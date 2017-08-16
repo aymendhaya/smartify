@@ -1,44 +1,63 @@
-import React , { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React, {Component} from 'react';
+
 import Artist from './ArtistComponent';
 import Album from './AlbumComponent';
 import Track from './TrackComponent';
 
+import PropTypes from 'prop-types'
 
+class SearchResult extends Component {
 
-export default class SearchResult extends Component {
-
+  constructor(props) {
+    super(props)
+    this.state = {
+      expanded_artist: undefined
+    }
+  }
 
   render() {
 
-    return (
+    if (!this.props.search_result) {
+      return null
+    }
 
-                <div style={{ display: this.props.params.search_result ? 'block' : 'none' }}>
-
-
-          <div style={{ display: this.props.params.search_type === 'artist' ? 'block' : 'none' }}>
-            {(this.props.params.search_type === 'artist') && (this.props.params.search_result)  ? (this.props.params.search_result)
-              .map((data, key) =>
-              { return <MuiThemeProvider key={key}><Artist objArtist={data} /></MuiThemeProvider> })
-              : null}
-
-          </div>
-
-             <div style={{ display: this.props.params.search_type === 'album' ? 'block' : 'none' }}>
-            {(this.props.params.search_type === 'album') && (this.props.params.search_result)  ? (this.props.params.search_result)
-              .map((data, key) =>
-              { return <MuiThemeProvider key={key}><Album objAlbum={data} /></MuiThemeProvider> })
-              : null}
-          </div>
-
-               <div style={{ display: this.props.params.search_type === 'track' ? 'block' : 'none' }}>
-            {(this.props.params.search_type === 'track') && (this.props.params.search_result)  
-            ?  <MuiThemeProvider><Track tracks={this.props.params.search_result} /></MuiThemeProvider> 
-              : null}
-          </div>
-          
+    switch(this.props.search_type) {
+      case 'artist':
+        return <div>
+          {(this.props.search_type === 'artist') ?
+            (this.props.search_result)
+              .map((data, key) => {
+                return <Artist key={key} objArtist={data} expanded={data.id === this.state.expanded_artist} onExpandClick={id => this.handleArtistExpanded(id)} />
+              })
+            : null}
         </div>
 
-    );
+      case 'album':
+        return <div>
+          {(this.props.search_type === 'album') ?
+            (this.props.search_result)
+              .map((data, key) => {
+                return <Album key={key} objAlbum={data}/>
+              })
+            : null}
+        </div>
+
+      case 'track':
+        return <Track tracks={this.props.search_result}/>
+
+      default:
+        return <div className="error">Unkown search type</div>
+    }
+  }
+
+  handleArtistExpanded(id) {
+    this.setState({expanded_artist: id})
   }
 }
+
+SearchResult.propTypes = {
+  search_result: PropTypes.array.isRequired,
+  search_type: PropTypes.string.isRequired
+}
+
+export default SearchResult
