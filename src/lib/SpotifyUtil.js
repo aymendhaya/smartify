@@ -15,3 +15,10 @@ export function getAlbumsByArtist(artist_id) {
 export function getSongsByAlbum(album_id) {
   return getData('/v1/albums/' + album_id)
 }
+
+
+
+
+
+
+// https://api.spotify.com/v1/tracks/{id}
