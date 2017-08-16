@@ -41,7 +41,7 @@ class Album extends Component {
 
           <CardMedia
             expandable={true}
-            overlay={<CardTitle title={this.props.objAlbum.name + "\'s Tracklist"}
+            overlay={<CardTitle title={this.props.objAlbum.name + '\'s Tracklist'}
               subtitle={'By ' + this.props.objAlbum.artists[0].name} />}
           >
             <img src={this.props.objAlbum.images[0].url} alt="" />
@@ -57,7 +57,7 @@ class Album extends Component {
 }
 
 // function mapStateToProps(state, prop){
-  
+
 //   return { cart: state.cart }
 // }
 
