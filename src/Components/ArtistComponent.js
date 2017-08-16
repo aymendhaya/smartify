@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import { getAlbumsByArtist } from '../lib/SpotifyUtil';
 import Album from './AlbumComponent';
@@ -28,8 +28,23 @@ class Artist extends Component {
       })
   }
 
-  handleExpandChange = (expanded) => {
-    this.setState({ expanded: expanded });
+  componentWillReceiveProps(nextProps) {
+    if(this.props.objArtist.id !== nextProps.objArtist.id) {
+      this.setState({
+        expanded: false,
+        albums: undefined
+      }, () => {
+        getAlbumsByArtist(nextProps.objArtist.id).then(
+          json => {
+            this.setState({ albums: json.items })
+          })
+      })
+
+    }
+  }
+
+  handleExpandChange = () => {
+    this.props.onExpandClick(this.props.expanded ? undefined : this.props.objArtist.id)
   };
 
   handleToggle = (event, toggle) => {
@@ -46,7 +61,7 @@ class Artist extends Component {
 
   render() {
     return (
-      <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+      <Card expanded={this.props.expanded} onExpandChange={(expanded) => this.handleExpandChange(expanded) }>
         <CardHeader
           title={this.props.objArtist.name}
           subtitle={'Followers: ' + this.props.objArtist.followers.total + ' / Popularity: ' + this.props.objArtist.popularity}
@@ -59,8 +74,8 @@ class Artist extends Component {
 
         <CardMedia
           expandable={true}
-          
-          overlay={<CardTitle title={this.props.objArtist.name + "\'s Albums List"}
+
+          overlay={<CardTitle title={this.props.objArtist.name + '\'s Albums List'}
             subtitle={this.props.objArtist.genres.map((data, key) =>
             { return <span key={key} style={styles.chip} className="label label-danger">{data}</span> })} />}
 
@@ -72,7 +87,7 @@ class Artist extends Component {
         <CardText expandable={true}>
 
           {this.state.albums ? (this.state.albums).map((data, key) =>
-          { return <MuiThemeProvider key={key}><Album objAlbum={data} /></MuiThemeProvider> })
+          { return <Album objAlbum={data} key={key} /> })
             : null}
 
         </CardText>
