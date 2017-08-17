@@ -9,7 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import { connect } from 'react-redux';
-import { addFav, cancelFav } from '../redux';
+import { addFav, cancelFav } from '../Redux/Actions';
 
 const style = {
   margin: 0,
