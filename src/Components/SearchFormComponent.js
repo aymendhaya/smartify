@@ -37,16 +37,6 @@ class SearchForm extends Component {
 
       <div className="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
 
-        <Dialog
-          actions={this.actions}
-          modal={false}
-          onRequestClose={e => this.handleClose()}
-          open={this.state.formControl}
-
-        >
-          {this.state.alertContent}
-        </Dialog>
-
         <TextField
           floatingLabelText="What are you searching for ?"
           floatingLabelFixed={true}
@@ -86,7 +76,17 @@ class SearchForm extends Component {
         }
 
 
+        <Dialog
+          actions={this.actions}
+          modal={false}
+          onRequestClose={e => this.handleClose()}
+          open={this.state.formControl}
 
+        >
+          {this.state.alertContent}
+        </Dialog>
+
+        
       </div>
 
     );
