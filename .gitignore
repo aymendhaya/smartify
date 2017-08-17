@@ -21,6 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .editorconfig
-src/config.js
+/src/config.js
 .eslintrc.json
 /.idea
