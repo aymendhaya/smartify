@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-// import {bindActionCreators} from 'redux';
-// import {connect} from 'react-redux';
-// import * as CartActions from '../actions/cart';
-
 import { getSongsByAlbum } from '../lib/SpotifyUtil';
 import { Card, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import Track from './TrackComponent';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Album extends Component {
 
@@ -21,10 +16,8 @@ class Album extends Component {
     getSongsByAlbum(this.props.objAlbum.id).then(
       json => {
         this.setState({ tracks: json.tracks.items })
-        // console.log(this.state.tracks)
       })
   }
-
 
   render() {
 
@@ -48,25 +41,12 @@ class Album extends Component {
           </CardMedia>
 
           <CardText expandable={true}>
-            <MuiThemeProvider><Track tracks={this.state.tracks} /></MuiThemeProvider>
+            <Track isinFavlist={false} tracks={this.state.tracks} />
           </CardText>
         </Card>
       </div>
     );
   }
 }
-
-// function mapStateToProps(state, prop){
-
-//   return { cart: state.cart }
-// }
-
-// function mapDispatchToProps(dispatch) {
-
-//   return { action: bindActionCreators(CartActions, dispatch)}
-
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Track);
 
 export default Album
