@@ -1,12 +1,13 @@
-import { applyMiddleware, createStore, } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reducers } from '../Reducers/TrackReducers'
+import { manageFav } from '../Reducers/TrackReducers'
 
 
 
 
 // store.js
 export function configureStore(initialState = {}) {
+    const reducers = combineReducers({manageFav})
     const store = createStore(
         reducers,
         initialState,
