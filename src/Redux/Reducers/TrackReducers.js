@@ -1,8 +1,8 @@
 // reducers.js
-import { combineReducers } from 'redux';
+// import { combineReducers } from 'redux';
 
 
-export const manageFav = (state = [], action) => {
+export function manageFav(state = [], action) {
     switch (action.type) {
         case 'ADD_FAV':
             { return state.concat(action.objTrack); }
@@ -13,11 +13,4 @@ export const manageFav = (state = [], action) => {
         default:
             return state;
     }
-};
-
-
-
-
-export const reducers = combineReducers({
-    manageFav,
-});
+}
