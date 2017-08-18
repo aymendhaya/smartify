@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Artist from './ArtistComponent';
 import Album from './AlbumComponent';
 import Track from './TrackComponent';
-
+import Favlist from './FavlistComponent';
 import PropTypes from 'prop-types'
 
 class SearchResult extends Component {
@@ -30,6 +30,8 @@ class SearchResult extends Component {
                 return <Artist key={key} objArtist={data} expanded={data.id === this.state.expanded_artist} onExpandClick={id => this.handleArtistExpanded(id)} />
               })
             : null}
+
+            <Favlist/>
         </div>
 
       case 'album':
@@ -40,10 +42,14 @@ class SearchResult extends Component {
                 return <Album key={key} objAlbum={data}/>
               })
             : null}
+
+            <Favlist/>
+
         </div>
 
       case 'track':
-        return <Track tracks={this.props.search_result}/>
+        return <div><Track tracks={this.props.search_result}/> <Favlist/> </div>
+        
 
       default:
         return <div className="error">Unkown search type</div>

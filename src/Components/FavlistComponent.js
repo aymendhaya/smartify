@@ -1,74 +1,56 @@
 import React , { Component } from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Drawer from 'material-ui/Drawer';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import { connect } from 'react-redux';
+import Track from './TrackComponent';
+import { cancelFav } from '../Redux/Actions/TrackActions';
 
-const styles = {
-  radioButton: {
-    marginTop: 16,
-  },
+
+const style = {
+  margin: 0,
+  top: 'auto',
+  right: '2%',
+  bottom: '2%',
+  left: 'auto',
+  position: 'fixed',
 };
 
-/**
- * Dialog content can be scrollable.
- */
-export default class Favlist extends Component {
-  state = {
-    open: false,
-  };
 
-  handleOpen = () => {
-    this.setState({open: true});
-  };
+class Favlist extends Component {
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {openFavlist: false };
+
+  }
+
+  handleToggle = () => this.setState({openFavlist: !this.state.openFavlist});
 
   render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
-
-    const radios = [];
-    for (let i = 0; i < 30; i++) {
-      radios.push(
-        <RadioButton
-          key={i}
-          value={`value${i + 1}`}
-          label={`Option ${i + 1}`}
-          style={styles.radioButton}
-        />
-      );
-    }
 
     return (
       <div>
-        <RaisedButton label="Scrollable Dialog" onTouchTap={this.handleOpen} />
-        <Dialog
-          title="Scrollable Dialog"
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
-        >
-          <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
-            {radios}
-          </RadioButtonGroup>
-        </Dialog>
+          <Drawer open={this.state.openFavlist} width="30%">
+
+          <Track tracks={this.props.manageFav} isinFavlist={true}/>
+
+        </Drawer>
+
+        <FloatingActionButton style={style} onTouchTap={this.handleToggle.bind(this)}><ActionFavorite /></FloatingActionButton>
+
       </div>
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  manageFav: state.manageFav,
+});
+
+const mapDispatchToProps = {cancelFav};
+
+const FavlistContainer = connect(mapStateToProps, mapDispatchToProps)(Favlist);
+
+export default FavlistContainer;
